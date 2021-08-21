@@ -36,7 +36,7 @@ with open('dl_paths.csv') as f:
           douga_ok_name = douga_name + "mp4.mp4"
           douga_false_name = douga_name + "mp4"
 
-          ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s%(ext)s','format':'137+140'})
+          ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s%(ext)s','format':'best'})
 
           with ydl:
               result = ydl.extract_info(
