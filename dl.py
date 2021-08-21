@@ -33,10 +33,10 @@ with open('dl_paths.csv') as f:
           print(path + "の処理を開始します_______________")
           douga_name = path.split("=")[-1]
 
-          douga_ok_name = douga_name + ".mp4"
+          douga_ok_name = douga_name + "mp4.mp4"
           douga_false_name = douga_name + "mp4"
 
-          ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s%(ext)s','format':'137'})
+          ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s%(ext)s','format':'137+140'})
 
           with ydl:
               result = ydl.extract_info(
@@ -45,6 +45,7 @@ with open('dl_paths.csv') as f:
               )
 
           if os.path.isfile(douga_false_name):
+            print("ファイル名を訂正します。")
             os.rename(douga_false_name,douga_ok_name)
 
           os.rename(douga_ok_name,str(row[1]) + ".mp4" )
