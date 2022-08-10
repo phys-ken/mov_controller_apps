@@ -4,7 +4,6 @@ import os
 import datetime
 import sys
 import csv
-import subprocess
 
 if not os.path.isfile("dl_paths.csv"):
     with open('dl_paths.csv', 'w') as f:
@@ -56,8 +55,4 @@ with open('dl_paths.csv') as f:
 
             os.rename(douga_ok_name, str(row[1]) + ".mp4")
             shutil.move(str(row[1]) + ".mp4", dir_for_output)
-
-            #mp3変換
-            subprocess.run(["ffmpeg" , "-i" , dir_for_output + "/" + str(row[1]) + ".mp4" ,"-vn" , dir_for_output + "/" + str(row[1]) + ".mp3"])
-
         rowcounter = rowcounter + 1
