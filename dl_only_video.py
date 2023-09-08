@@ -1,5 +1,5 @@
 import shutil
-import youtube_dl
+from yt_dlp import YoutubeDL
 import os
 import datetime
 import sys
@@ -29,30 +29,14 @@ with open('dl_paths.csv') as f:
         else:
             path = row[0]
             print(path + "の処理を開始します___________")
+            ydl_video_opts = {
+                'outtmpl' : '%(title)s'+'_.mp4',
+                'format' : 'best',
+            }
 
-            #動画のIDをURLから取得
-            ## こっちはOK     → https://www.youtube.com/watch?v=WJzSBLCaKc8
-            ## 短縮URLは未対応 → https://youtu.be/WJzSBLCaKc8
-            douga_name = path.split("=")[-1]
-
-            #youtube_dlは、"動画id+mp4"(ピリオドなし)で動画を保存してしまうことがある。
-            #そのときのために、パスの修正を泥臭く行う。
-            douga_ok_name = douga_name + "mp4.mp4"
-            douga_false_name = douga_name + "mp4"
-
-            ydl = youtube_dl.YoutubeDL(
-                {'outtmpl': '%(id)s%(ext)s', 'format': 'best'})
-
-            with ydl:
-                result = ydl.extract_info(
-                    path,
-                    download=True 
-                )
-
-            if os.path.isfile(douga_false_name):
-                print("ファイル名を訂正します。")
-                os.rename(douga_false_name, douga_ok_name)
-
-            os.rename(douga_ok_name, str(row[1]) + ".mp4")
-            shutil.move(str(row[1]) + ".mp4", dir_for_output)
+            with YoutubeDL(ydl_video_opts) as ydl:
+                res=ydl.extract_info(path, download=True)
+            
+            print (res['title'])
+            shutil.move(res['title'] + "_.mp4", dir_for_output)
         rowcounter = rowcounter + 1
