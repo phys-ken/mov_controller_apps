@@ -1,3 +1,7 @@
+# ファイル名は動画タイトルになります。
+# DLはmp4です。
+
+
 import shutil
 from yt_dlp import YoutubeDL
 import os
@@ -8,7 +12,7 @@ import csv
 if not os.path.isfile("dl_paths.csv"):
     with open('dl_paths.csv', 'w') as f:
         writer = csv.writer(f)
-        writer.writerow(["動画のURL", "保存したい名前(拡張子無し)"])
+        writer.writerow(["URL(youtube)"])
     print("csvを作成しました、ダウンロードしたい動画のパスを記入してください")
     sys.exit()
 
